@@ -17,10 +17,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
+    private String first_name;
+    private String fam_name;
     private String password;
     private String email;
     private LocalDate created;
+    private Long id_challengge_compl;
 
 }
 

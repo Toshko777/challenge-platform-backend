@@ -75,10 +75,11 @@ public class UserServiceImpl implements UserService {
     public UserDto updateUser(long id, UserDto userDto) {
         User found = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 
-        found.setUsername(userDto.getUsername());
+        found.setFirst_name(userDto.getFirst_name());
+        found.setFam_name(userDto.getFam_name());
         found.setPassword(userDto.getPassword());
         found.setEmail(userDto.getEmail());
-
+        found.setId_challengge_compl(userDto.getId_challengge_compl());
         User savedBook = userRepository.save(found);
 
         return mapToDto(savedBook);

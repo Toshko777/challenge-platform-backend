@@ -14,8 +14,11 @@ public class UserDto {
 
     private Long id;
 
-    @NotEmpty(message = "username cannot be empty")
-    private String username;
+    @NotEmpty(message = "name cannot be empty")
+    private String first_name;
+
+    @NotEmpty(message = "name cannot be empty")
+    private String fam_name;
 
     @NotEmpty(message = "password cannot be empty")
     @Size(min = 8, message = "password must be at least 8 characters")
@@ -24,4 +27,5 @@ public class UserDto {
     @NotEmpty(message = "email cannot be empty")
     private String email;
 
+    private Long id_challengge_compl;
 }

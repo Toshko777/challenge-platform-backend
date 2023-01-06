@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS users;
 -- );
 CREATE TABLE users
 (
-    id_u SERIAL NOT NULL,
+    id SERIAL NOT NULL,
     first_name varchar(100) NOT NULL,
     fam_name varchar(100) NOT NULL,
     email varchar(100) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE users
     created  DATE DEFAULT NULL,
     id_challengge_compl SERIAL NOT NULL
     
-    PRIMARY KEY (id_u)
+    PRIMARY KEY (id)
     -- FOREIGN KEY(id_u) REFERENCES Accs(id_a)
     -- FOREIGN KEY(id_challengge_compl) REFERENCES CH_completed(id_comp)
     

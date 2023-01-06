@@ -1,4 +1,4 @@
-INSERT INTO users(first_name, fam_name, email, password,  created, id_challengge_compl)
+INSERT INTO users(first_name, fam_name, password, email,  created, id_challengge_compl)
 values ('test', 'testov', 'test@test.com', 'parola123','2022-12-12', 1);
 
 -- INSERT INTO Accs(username, clearance_lvl)
