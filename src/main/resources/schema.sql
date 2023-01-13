@@ -18,7 +18,7 @@ CREATE TABLE users
     email varchar(100) NOT NULL,
     password varchar(100) NOT NULL,
     created  DATE DEFAULT NULL,
-    id_challengge_compl SERIAL NOT NULL
+    id_challengge_compl SERIAL NOT NULL,
     
     PRIMARY KEY (id)
     -- FOREIGN KEY(id_u) REFERENCES Accs(id_a)

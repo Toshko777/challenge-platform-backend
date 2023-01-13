@@ -20,7 +20,7 @@ public class UserDto {
     @NotEmpty(message = "name cannot be empty")
     private String fam_name;
 
-    @NotEmpty(message = "password cannot be empty")
+    
     @Size(min = 8, message = "password must be at least 8 characters")
     private String password;
 
