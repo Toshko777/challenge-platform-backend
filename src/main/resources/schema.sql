@@ -1,15 +1,15 @@
--- DROP TABLE IF EXISTS Accs;
+DROP TABLE IF EXISTS Accs;
 DROP TABLE IF EXISTS users;
 -- DROP TABLE IF EXISTS Clearance;
 -- DROP TABLE IF EXISTS CH_completed;
--- CREATE TABLE Accs
--- (
---     id_a SERIAL NOT NULL,
---     username varchar(100) NOT NULL,
---     clearance_lvl int NOT NULL
---     PRIMARY KEY (id_a)
---     FOREIGN KEY(clearance_lvl) REFERENCES Clearance(id_c)
--- );
+CREATE TABLE Accs
+ (
+   id SERIAL NOT NULL,
+    user_name varchar(100) NOT NULL,
+    clearance_lvl int NOT NULL,
+     PRIMARY KEY (id) 
+   --FOREIGN KEY(clearance_lvl) REFERENCES Clearance(id_c)
+);
 CREATE TABLE users
 (
     id SERIAL NOT NULL,
@@ -18,10 +18,9 @@ CREATE TABLE users
     email varchar(100) NOT NULL,
     password varchar(100) NOT NULL,
     created  DATE DEFAULT NULL,
-    id_challengge_compl SERIAL NOT NULL,
     
-    PRIMARY KEY (id)
-    -- FOREIGN KEY(id_u) REFERENCES Accs(id_a)
+    PRIMARY KEY (id) 
+    -- FOREIGN KEY(id_u) 
     -- FOREIGN KEY(id_challengge_compl) REFERENCES CH_completed(id_comp)
     
 );

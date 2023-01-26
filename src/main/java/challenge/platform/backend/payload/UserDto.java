@@ -27,5 +27,5 @@ public class UserDto {
     @NotEmpty(message = "email cannot be empty")
     private String email;
 
-    private Long id_challengge_compl;
+    
 }

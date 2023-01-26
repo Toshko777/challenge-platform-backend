@@ -22,7 +22,7 @@ public class User {
     private String password;
     private String email;
     private LocalDate created;
-    private Long id_challengge_compl;
+   
 
 }
 

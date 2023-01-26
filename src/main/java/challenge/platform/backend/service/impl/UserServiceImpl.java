@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService {
         found.setFam_name(userDto.getFam_name());
         found.setPassword(userDto.getPassword());
         found.setEmail(userDto.getEmail());
-        found.setId_challengge_compl(userDto.getId_challengge_compl());
+        
         User savedBook = userRepository.save(found);
 
         return mapToDto(savedBook);
