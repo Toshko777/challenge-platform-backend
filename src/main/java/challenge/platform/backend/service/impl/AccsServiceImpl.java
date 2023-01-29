@@ -26,19 +26,19 @@ public class AccsServiceImpl implements AccsService {
         this.modelMapper = modelMapper;
     }
 
-    // convert entity to dto
+    
     private AccsDto mapToDto(Accs accs) {
         return modelMapper.map(accs, AccsDto.class);
     }
 
-    // convert dto to entity
+    
     private Accs mapToEntity(AccsDto accsDto) {
         return modelMapper.map(accsDto, Accs.class);
     }
 
     @Override
     public AccsDto createAccs(AccsDto accsDto) {
-        // convert dto to entity
+       
         Accs accsToCreate = mapToEntity(accsDto);
         
         Accs createdAccs = accsRepository.save(accsToCreate);
@@ -48,11 +48,11 @@ public class AccsServiceImpl implements AccsService {
 
     @Override
     public AccsResponse getAllAccss(int pageNo, int pageSize, String sortBy, String sortDir) {
-        // create Pageable instance
+        
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(sortDir), sortBy));
         Page<Accs> accss = accsRepository.findAll(pageable);
 
-        // get content for page object
+        
         AccsResponse accsResponse = new AccsResponse();
 
         accsResponse.setContent(accss.getContent().stream().map(accs -> mapToDto(accs)).toList());

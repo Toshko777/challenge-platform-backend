@@ -5,11 +5,12 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Ch_compResponse {
-    private List<Ch_compDto> content;
+public class ClearanceResponse {
+    private List<ClearanceDto> content;
     private int pageNo;
     private int pageSize;
     private long totalElements;
     private int totalPages;
     private boolean last;
+    
 }

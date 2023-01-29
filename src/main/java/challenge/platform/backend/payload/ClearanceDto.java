@@ -13,15 +13,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Ch_compDto {
+public class ClearanceDto {
 
     private Long id;
 
     @NotEmpty(message = "name cannot be empty")
-    private String user_name;
-
-    @NotEmpty(message = "name cannot be empty")
-    private String challenge_name;
+    private String clearance_position;
 
     
    

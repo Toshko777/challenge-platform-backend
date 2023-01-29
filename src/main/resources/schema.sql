@@ -1,7 +1,9 @@
 DROP TABLE IF EXISTS Accs;
 DROP TABLE IF EXISTS users;
--- DROP TABLE IF EXISTS Clearance;
--- DROP TABLE IF EXISTS CH_completed;
+DROP TABLE IF EXISTS Clearance;
+DROP TABLE IF EXISTS CH_comp;
+DROP TABLE IF EXISTS CH_created;
+
 CREATE TABLE Accs
  (
    id SERIAL NOT NULL,
@@ -24,17 +26,27 @@ CREATE TABLE users
     -- FOREIGN KEY(id_challengge_compl) REFERENCES CH_completed(id_comp)
     
 );
--- CREATE TABLE Clearance
--- (
---     id_c SERIAL NOT NULL,
---     clearance_position varchar(10) NOT NULL
---     PRIMARY KEY(id_c)
--- );
+CREATE TABLE Clearance
+(
+    id SERIAL NOT NULL,
+    clearance_position varchar(10) NOT NULL,
+    PRIMARY KEY(id)
+);
 
 
--- CREATE TABLE CH_completed
--- (
---     id_comp SERIAL NOT NULL,
---     created_by varchar(100) NOT NULL
---     PRIMARY KEY(id_comp)
--- );
+CREATE TABLE CH_comp
+ (
+     id SERIAL NOT NULL,
+     user_name varchar(100) NOT NULL,
+     challenge_name varchar(100) NOT NULL,
+     PRIMARY KEY(id)
+     --FOREIGN KEY(user_name) REFERENCES Accs(user_name)
+ );
+ CREATE TABLE CH_created
+ (
+     id SERIAL NOT NULL,
+     user_name varchar(100) NOT NULL,
+     challenge_name varchar(100) NOT NULL,
+     PRIMARY KEY(id)
+     --FOREIGN KEY(user_name) REFERENCES Accs(user_name)
+ );

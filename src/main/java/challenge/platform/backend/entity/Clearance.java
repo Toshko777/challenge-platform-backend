@@ -11,13 +11,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "CH_comp", uniqueConstraints = {})
-public class Ch_comp {
+@Table(name = "Clearance", uniqueConstraints = {})
+public class Clearance {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String user_name;
-    private String challenge_name;
-
+    private String clearance_position;
 }
