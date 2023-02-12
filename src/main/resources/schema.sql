@@ -1,52 +1,66 @@
-DROP TABLE IF EXISTS Accs;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS Clearance;
-DROP TABLE IF EXISTS CH_comp;
-DROP TABLE IF EXISTS CH_created;
+DROP TABLE IF EXISTS Accounts CASCADE;
+DROP TABLE IF EXISTS Roles CASCADE;
+DROP TABLE IF EXISTS Accounts_Roles CASCADE;
+DROP TABLE IF EXISTS Challenges CASCADE;
+DROP TABLE IF EXISTS Completed_Challenge CASCADE;
+DROP TABLE IF EXISTS Completed_Challenges CASCADE;
+DROP TABLE IF EXISTS Badges CASCADE;
 
-CREATE TABLE Accs
- (
-   id SERIAL NOT NULL,
-    user_name varchar(100) NOT NULL,
-    clearance_lvl int NOT NULL,
-     PRIMARY KEY (id) 
-   --FOREIGN KEY(clearance_lvl) REFERENCES Clearance(id_c)
-);
-CREATE TABLE users
+CREATE TABLE Accounts
 (
-    id SERIAL NOT NULL,
+    id         SERIAL       NOT NULL,
+    username   varchar(30)  NOT NULL,
     first_name varchar(100) NOT NULL,
-    fam_name varchar(100) NOT NULL,
-    email varchar(100) NOT NULL,
-    password varchar(100) NOT NULL,
-    created  DATE DEFAULT NULL,
-    
-    PRIMARY KEY (id) 
-    -- FOREIGN KEY(id_u) 
-    -- FOREIGN KEY(id_challengge_compl) REFERENCES CH_completed(id_comp)
-    
+    last_name  varchar(100) NOT NULL,
+    e_mail     varchar(100) NOT NULL,
+    password   varchar(100) NOT NULL,
+    badges     TEXT[],
+    created    DATE DEFAULT NULL,
+    PRIMARY KEY (id)
 );
-CREATE TABLE Clearance
+
+CREATE TABLE Roles
 (
-    id SERIAL NOT NULL,
-    clearance_position varchar(10) NOT NULL,
-    PRIMARY KEY(id)
+    id          SERIAL      NOT NULL PRIMARY KEY,
+    role        varchar(30) NOT NULL,
+    permissions TEXT[]
 );
 
+CREATE TABLE Accounts_Roles
+(
+    id      SERIAL NOT NULL PRIMARY KEY,
+    user_id INT    NOT NULL REFERENCES Accounts (id),
+    role_id INT    NOT NULL REFERENCES Roles (id)
+);
 
-CREATE TABLE CH_comp
- (
-     id SERIAL NOT NULL,
-     user_name varchar(100) NOT NULL,
-     challenge_name varchar(100) NOT NULL,
-     PRIMARY KEY(id)
-     --FOREIGN KEY(user_name) REFERENCES Accs(user_name)
- );
- CREATE TABLE CH_created
- (
-     id SERIAL NOT NULL,
-     user_name varchar(100) NOT NULL,
-     challenge_name varchar(100) NOT NULL,
-     PRIMARY KEY(id)
-     --FOREIGN KEY(user_name) REFERENCES Accs(user_name)
- );
+CREATE TABLE Challenges
+(
+    id          SERIAL       NOT NULL PRIMARY KEY,
+    name        varchar(100) NOT NULL,
+    description varchar(100) NOT NULL,
+    creator_id  INT          NOT NULL REFERENCES Accounts (id),
+    created     DATE DEFAULT NULL
+);
+
+CREATE TABLE Completed_Challenges
+(
+    user_id              INT          NOT NULL PRIMARY KEY REFERENCES Accounts (id),
+    completed_challenges varchar(100) NOT NULL
+);
+
+CREATE TABLE Completed_Challenge
+(
+    id           SERIAL NOT NULL PRIMARY KEY,
+    user_id      INT    NOT NULL REFERENCES Accounts (id),
+    challenge_id INT    NOT NULL REFERENCES Challenges (id),
+    started      DATE DEFAULT NULL,
+    completed    DATE DEFAULT NULL
+);
+
+CREATE TABLE Badges
+(
+    id          SERIAL       NOT NULL,
+    name        varchar(100) NOT NULL,
+    description varchar(100) NOT NULL,
+    condition   varchar(100) NOT NULL
+)

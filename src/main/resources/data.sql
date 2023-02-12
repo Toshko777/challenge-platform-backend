@@ -1,21 +1,19 @@
-INSERT INTO users(first_name, fam_name,  email, password, created)
-values ('test', 'testov', 'test@test.com', 'parola123','2022-12-12'); 
+INSERT INTO Accounts(username, first_name, last_name, e_mail, password, created)
+values ('theadmin', 'admin', 'adminov', 'admin@gmail.com', 'admin', '2022-12-12');
 
 
+INSERT INTO Roles(role, permissions)
+values ('user', '{"create", "edit_self"}'),
+       ('moderator', '{"create","edit","delete"}'),
+       ('admin', '{"create","edit","delete", "change_role", "delete_user", "deactivate_user"}');
 
 
-
-INSERT INTO Accs(user_name, clearance_lvl)
-values('test_1', 1);
-
-INSERT INTO Clearance(clearance_position)
-values('user'),
-    ('moderator'),
-        ('admin');
+INSERT INTO Accounts_Roles(user_id, role_id)
+values (1, 3);
 
 
-INSERT INTO CH_comp(user_name, challenge_name)
-values('test_1', 'no chocolate for a month');
-
-INSERT INTO CH_created(user_name, challenge_name)
-values('test_1', 'walking 10k steps a day');
+-- INSERT INTO Challenges(name, description, creator, created)
+-- values ('10k', 'walking 10k steps a day for 3 days', 'test_1', '2022-12-22');
+--
+-- INSERT INTO Completed_Challenges(user_id, challenge_id, started, completed)
+-- values ('1', '1', '2022-12-22', '2022-12-25');
