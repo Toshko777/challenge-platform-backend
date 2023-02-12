@@ -1,10 +1,10 @@
 package challenge.platform.backend.service.impl;
 
-import challenge.platform.backend.entity.Ch_created;
+import challenge.platform.backend.entity.Challenge;
 import challenge.platform.backend.exception.ResourceNotFoundException;
 import challenge.platform.backend.payload.Ch_createdDto;
 import challenge.platform.backend.payload.Ch_createdResponse;
-import challenge.platform.backend.repository.Ch_createdRepository;
+import challenge.platform.backend.repository.ChallengesRepository;
 import challenge.platform.backend.service.Ch_createdService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -13,48 +13,46 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-
 @Service
 public class Ch_createdServiceImpl implements Ch_createdService {
 
     private ModelMapper modelMapper;
-    private Ch_createdRepository ch_createdRepository;
+    private ChallengesRepository challengesRepository;
 
-    public Ch_createdServiceImpl(Ch_createdRepository ch_createdRepository, ModelMapper modelMapper) {
-        this.ch_createdRepository = ch_createdRepository;
+    public Ch_createdServiceImpl(ChallengesRepository challengesRepository, ModelMapper modelMapper) {
+        this.challengesRepository = challengesRepository;
         this.modelMapper = modelMapper;
     }
 
-    private Ch_createdDto mapToDto(Ch_created ch_created) {
-        return modelMapper.map(ch_created, Ch_createdDto.class);
+    private Ch_createdDto mapToDto(Challenge challenge) {
+        return modelMapper.map(challenge, Ch_createdDto.class);
     }
 
     
-    private Ch_created mapToEntity(Ch_createdDto ch_createdDto) {
-        return modelMapper.map(ch_createdDto, Ch_created.class);
+    private Challenge mapToEntity(Ch_createdDto ch_createdDto) {
+        return modelMapper.map(ch_createdDto, Challenge.class);
     }
 
     @Override
     public Ch_createdDto createCh_created(Ch_createdDto ch_createdDto) {
         
-        Ch_created ch_createdToCreate = mapToEntity(ch_createdDto);
+        Challenge challengeToCreate = mapToEntity(ch_createdDto);
         
-        Ch_created createdCh_created = ch_createdRepository.save(ch_createdToCreate);
+        Challenge createdChallenge = challengesRepository.save(challengeToCreate);
 
-        return mapToDto(createdCh_created);
+        return mapToDto(createdChallenge);
     }
 
     @Override
     public Ch_createdResponse getAllCh_createds(int pageNo, int pageSize, String sortBy, String sortDir) {
         
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(sortDir), sortBy));
-        Page<Ch_created> ch_createds = ch_createdRepository.findAll(pageable);
+        Page<Challenge> ch_createds = challengesRepository.findAll(pageable);
 
         
         Ch_createdResponse ch_createdResponse = new Ch_createdResponse();
 
-        ch_createdResponse.setContent(ch_createds.getContent().stream().map(ch_created -> mapToDto(ch_created)).toList());
+        ch_createdResponse.setContent(ch_createds.getContent().stream().map(challenge -> mapToDto(challenge)).toList());
         ch_createdResponse.setPageNo(ch_createds.getNumber());
         ch_createdResponse.setPageSize(ch_createds.getSize());
         ch_createdResponse.setTotalElements(ch_createds.getTotalElements());
@@ -66,27 +64,27 @@ public class Ch_createdServiceImpl implements Ch_createdService {
 
     @Override
     public Ch_createdDto getCh_createdById(long id) {
-        Ch_created ch_created = ch_createdRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ch_created", "id", id));
-        return mapToDto(ch_created);
+        Challenge challenge = challengesRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ch_created", "id", id));
+        return mapToDto(challenge);
     }
 
     @Override
     public Ch_createdDto updateCh_created(long id, Ch_createdDto ch_createdDto) {
-        Ch_created found = ch_createdRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ch_created", "id", id));
+        Challenge found = challengesRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ch_created", "id", id));
 
         found.setUser_name(ch_createdDto.getUser_name());
         found.setChallenge_name(ch_createdDto.getChallenge_name());
         
         
-        Ch_created savedBook = ch_createdRepository.save(found);
+        Challenge savedBook = challengesRepository.save(found);
 
         return mapToDto(savedBook);
     }
 
     @Override
     public void deleteCh_createdById(long id) {
-        Ch_created found = ch_createdRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ch_comp", "id", id));
-        ch_createdRepository.delete(found);
+        Challenge found = challengesRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Ch_comp", "id", id));
+        challengesRepository.delete(found);
     }
 
 

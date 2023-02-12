@@ -1,10 +1,13 @@
 package challenge.platform.backend.repository;
 
-import challenge.platform.backend.entity.User;
+
+import challenge.platform.backend.entity.Challenge;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface CompletedChallengeRepository extends JpaRepository<Challenge, Long> {
+
+    
 
 }

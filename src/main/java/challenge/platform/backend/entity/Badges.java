@@ -5,19 +5,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
+import java.time.LocalDate;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Accs", uniqueConstraints = {})
-public class Accs {
+@Table(name = "Badges")
+public class Badges {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String user_name;
-    private int clearance_lvl;
+    private String name;
+    private String description;
+    private String condition;
 
 }

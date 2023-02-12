@@ -5,17 +5,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Clearance", uniqueConstraints = {})
-public class Clearance {
+@Table(name = "Completed_Challenge")
+public class CompletedChallenge {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String clearance_position;
+    private Long userId;
+    private Long challengeId;
+    private LocalDate started;
+    private LocalDate completed;
+
 }

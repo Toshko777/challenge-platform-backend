@@ -5,19 +5,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "CH_created", uniqueConstraints = {})
-public class Ch_created {
+@Table(name = "Challenges")
+public class Challenge {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String user_name;
-    private String challenge_name;
+    private String name;
+    private String description;
+    private String creatorId;
+    private LocalDate created;
 
 }

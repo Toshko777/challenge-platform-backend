@@ -1,23 +1,23 @@
 package challenge.platform.backend.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import lombok.RequiredArgsConstructor;
 
 
 @Entity
 @Data
-@AllArgsConstructor
+@Table(name = "accountsRoles")
+@RequiredArgsConstructor
 @NoArgsConstructor
-@Table(name = "CH_comp", uniqueConstraints = {})
-public class Ch_comp {
+public class AccountRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String user_name;
-    private String challenge_name;
+    private Long userId;
+    private Long roleId;
+
 
 }

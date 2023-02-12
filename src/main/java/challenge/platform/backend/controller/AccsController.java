@@ -1,8 +1,8 @@
 package challenge.platform.backend.controller;
 
-import challenge.platform.backend.payload.AccsDto;
+import challenge.platform.backend.payload.AccountRoleDto;
 import challenge.platform.backend.payload.AccsResponse;
-import challenge.platform.backend.service.AccsService;
+import challenge.platform.backend.service.AccountsRolesService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,11 +20,11 @@ public class AccsController {
     public static final String DEFAULT_SORT_DIRECTION = "asc";
 
     // using interface -> because of the loose coupling
-    private final AccsService accsService;
+    private final AccountsRolesService accountsRolesService;
 
     @Autowired
-    public AccsController(AccsService accsService) {
-        this.accsService = accsService;
+    public AccsController(AccountsRolesService accountsRolesService) {
+        this.accountsRolesService = accountsRolesService;
     }
 
     @GetMapping(value = "/accs")
@@ -34,12 +34,12 @@ public class AccsController {
             @RequestParam(value = "sortBy", defaultValue = DEFAULT_SORT_BY, required = false) String sortBy,
             @RequestParam(value = "sortDir", defaultValue = DEFAULT_SORT_DIRECTION, required = false) String sortDir
     ) {
-        return accsService.getAllAccss(pageNo, pageSize, sortBy, sortDir);
+        return accountsRolesService.getAllAccss(pageNo, pageSize, sortBy, sortDir);
     }
 
     @GetMapping(value = "/accs/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AccsDto> getAccsById(@PathVariable(name = "id") Long id) {
-        return ResponseEntity.ok(accsService.getAccsById(id));
+    public ResponseEntity<AccountRoleDto> getAccsById(@PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok(accountsRolesService.getAccsById(id));
     }
 
 
@@ -50,19 +50,19 @@ public class AccsController {
 
 
     @PostMapping(value = "/accs", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AccsDto> createAccs(@Valid @RequestBody AccsDto dto) {
-        return new ResponseEntity<>(accsService.createAccs(dto), HttpStatus.CREATED);
+    public ResponseEntity<AccountRoleDto> createAccs(@Valid @RequestBody AccountRoleDto dto) {
+        return new ResponseEntity<>(accountsRolesService.createAccs(dto), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/accs/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AccsDto> updateAccs(@PathVariable(name = "id") long id,
-                                              @Valid @RequestBody AccsDto bookDto) {
-        return new ResponseEntity<>(accsService.updateAccs(id, bookDto), HttpStatus.OK);
+    public ResponseEntity<AccountRoleDto> updateAccs(@PathVariable(name = "id") long id,
+                                                     @Valid @RequestBody AccountRoleDto bookDto) {
+        return new ResponseEntity<>(accountsRolesService.updateAccs(id, bookDto), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/accs/{id}")
     public ResponseEntity<String> deleteAccs(@PathVariable(name = "id") Long id) {
-        accsService.deleteAccsById(id);
+        accountsRolesService.deleteAccsById(id);
         return ResponseEntity.ok("Book entity deleted successfully");
     }
 }

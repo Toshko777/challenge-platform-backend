@@ -1,15 +1,12 @@
 package challenge.platform.backend.repository;
 
-
-import challenge.platform.backend.entity.Ch_created;
-
-import java.util.Optional;
+import challenge.platform.backend.entity.CompletedChallenge;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface Ch_createdRepository extends JpaRepository<Ch_created, Long> {
+public interface Ch_compRepository extends JpaRepository<CompletedChallenge, Long> {
 
     
 

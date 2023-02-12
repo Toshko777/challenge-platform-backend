@@ -1,6 +1,6 @@
 package challenge.platform.backend.service.impl;
 
-import challenge.platform.backend.entity.Clearance;
+import challenge.platform.backend.entity.Roles;
 import challenge.platform.backend.exception.ResourceNotFoundException;
 import challenge.platform.backend.payload.ClearanceDto;
 import challenge.platform.backend.payload.ClearanceResponse;
@@ -13,8 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-
 @Service
 public class ClearanceServiceImpl implements ClearanceService {
 
@@ -26,8 +24,8 @@ public class ClearanceServiceImpl implements ClearanceService {
         this.modelMapper = modelMapper;
     }
 
-    private ClearanceDto mapToDto(Clearance clearance) {
-        return modelMapper.map(clearance, ClearanceDto.class);
+    private ClearanceDto mapToDto(Roles roles) {
+        return modelMapper.map(roles, ClearanceDto.class);
     }
 
     
@@ -38,12 +36,12 @@ public class ClearanceServiceImpl implements ClearanceService {
     public ClearanceResponse getAllClearances(int pageNo, int pageSize, String sortBy, String sortDir) {
         
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(sortDir), sortBy));
-        Page<Clearance> clearances = clearanceRepository.findAll(pageable);
+        Page<Roles> clearances = clearanceRepository.findAll(pageable);
 
         
         ClearanceResponse clearanceResponse = new ClearanceResponse();
 
-        clearanceResponse.setContent(clearances.getContent().stream().map(clearance -> mapToDto(clearance)).toList());
+        clearanceResponse.setContent(clearances.getContent().stream().map(roles -> mapToDto(roles)).toList());
         clearanceResponse.setPageNo(clearances.getNumber());
         clearanceResponse.setPageSize(clearances.getSize());
         clearanceResponse.setTotalElements(clearances.getTotalElements());
@@ -55,8 +53,8 @@ public class ClearanceServiceImpl implements ClearanceService {
 
     @Override
     public ClearanceDto getClearanceById(long id) {
-        Clearance clearance = clearanceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Clearance", "id", id));
-        return mapToDto(clearance);
+        Roles roles = clearanceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Clearance", "id", id));
+        return mapToDto(roles);
     }
 
  
