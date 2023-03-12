@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class UserResponse {
-    private List<UserDto> content;
+    private List<AccountDto> content;
     private int pageNo;
     private int pageSize;
     private long totalElements;

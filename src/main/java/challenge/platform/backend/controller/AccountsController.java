@@ -1,6 +1,6 @@
 package challenge.platform.backend.controller;
 
-import challenge.platform.backend.payload.UserDto;
+import challenge.platform.backend.payload.AccountDto;
 import challenge.platform.backend.payload.UserResponse;
 import challenge.platform.backend.service.UserService;
 import jakarta.validation.Valid;
@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+// admin user-controller
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -29,7 +30,7 @@ public class UserController {
 
     @GetMapping(value = "/users")
     public UserResponse getAllUsers(
-            @RequestParam(value = "re", defaultValue = DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = "pageNo", defaultValue = DEFAULT_PAGE_NUMBER, required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = DEFAULT_PAGE_SIZE, required = false) int pageSize,
             @RequestParam(value = "sortBy", defaultValue = DEFAULT_SORT_BY, required = false) String sortBy,
             @RequestParam(value = "sortDir", defaultValue = DEFAULT_SORT_DIRECTION, required = false) String sortDir
@@ -38,24 +39,24 @@ public class UserController {
     }
 
     @GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDto> getUserById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<AccountDto> getUserById(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @PostMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto dto) {
+    public ResponseEntity<AccountDto> createUser(@Valid @RequestBody AccountDto dto) {
         return new ResponseEntity<>(userService.createUser(dto), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/user/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDto> updateUser(@PathVariable(name = "id") long id,
-                                              @Valid @RequestBody UserDto bookDto) {
+    public ResponseEntity<AccountDto> updateUser(@PathVariable(name = "id") long id,
+                                                 @Valid @RequestBody AccountDto bookDto) {
         return new ResponseEntity<>(userService.updateUser(id, bookDto), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/user/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable(name = "id") Long id) {
         userService.deleteUserById(id);
-        return ResponseEntity.ok("Book entity deleted successfully");
+        return ResponseEntity.ok("User entity deleted successfully");
     }
 }

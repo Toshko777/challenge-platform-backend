@@ -1,17 +1,17 @@
 package challenge.platform.backend.service;
 
-import challenge.platform.backend.payload.UserDto;
+import challenge.platform.backend.payload.AccountDto;
 import challenge.platform.backend.payload.UserResponse;
 
 public interface UserService {
 
-    UserDto createUser(UserDto bookDto);
+    AccountDto createUser(AccountDto bookDto);
 
     UserResponse getAllUsers(int pageNo, int pageSize, String sortBy, String sortDir);
 
-    UserDto getUserById(long id);
+    AccountDto getUserById(long id);
 
-    UserDto updateUser(long id, UserDto userDto);
+    AccountDto updateUser(long id, AccountDto accountDto);
 
     void deleteUserById(long id);
 

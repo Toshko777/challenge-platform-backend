@@ -3,8 +3,7 @@ package challenge.platform.backend.service.impl;
 import challenge.platform.backend.entity.Account;
 import challenge.platform.backend.entity.AccountRole;
 import challenge.platform.backend.exception.ResourceNotFoundException;
-import challenge.platform.backend.payload.Roles;
-import challenge.platform.backend.payload.UserDto;
+import challenge.platform.backend.payload.AccountDto;
 import challenge.platform.backend.payload.UserResponse;
 import challenge.platform.backend.repository.AccountsRolesRepository;
 import challenge.platform.backend.repository.AccountsRepository;
@@ -25,40 +24,42 @@ public class UserServiceImpl implements UserService {
     private AccountsRepository accountsRepository;
     private AccountsRolesRepository accountsRolesRepository;
 
-    public UserServiceImpl(AccountsRepository accountsRepository, ModelMapper modelMapper) {
+    public UserServiceImpl(AccountsRepository accountsRepository, ModelMapper modelMapper, AccountsRolesRepository accountsRolesRepository) {
         this.accountsRepository = accountsRepository;
         this.modelMapper = modelMapper;
+        this.accountsRolesRepository = accountsRolesRepository;
     }
 
     // convert entity to dto
-    private UserDto mapToDto(Account account) {
-        return modelMapper.map(account, UserDto.class);
+    private AccountDto mapToDto(Account account) {
+        return modelMapper.map(account, AccountDto.class);
     }
 
     // convert dto to entity
-    private Account mapToEntity(UserDto userDto) {
-        return modelMapper.map(userDto, Account.class);
+    private Account mapToEntity(AccountDto accountDto) {
+        return modelMapper.map(accountDto, Account.class);
     }
 
     @Override
-    public UserDto createUser(UserDto userDto) {
+    public AccountDto createUser(AccountDto accountDto) {
+        Long roleId = 0L;
 
         // convert dto to entity
-        Account accountToSave = createUserToSave(userDto);
+        Account accountToSave = createUserToSave(accountDto);
         Account createdAccount = accountsRepository.save(accountToSave);
 
-        AccountRole accountRole = createAccountRole(userDto.getUsername());
+        AccountRole accountRole = createAccountRole(accountDto.getId(), roleId);
         accountsRolesRepository.save(accountRole);
 
         return mapToDto(createdAccount);
     }
 
-    private AccountRole createAccountRole(String username) {
-        return AccountRole.builder().username(username).role(Roles.USER.name()).build();
+    private AccountRole createAccountRole(Long userId, Long roleId) {
+        return new AccountRole(0L, userId, roleId);
     }
 
-    private Account createUserToSave(UserDto userDto) {
-        Account mappedAccount = mapToEntity(userDto);
+    private Account createUserToSave(AccountDto accountDto) {
+        Account mappedAccount = mapToEntity(accountDto);
         mappedAccount.setCreated(LocalDate.now());
         return mappedAccount;
     }
@@ -83,19 +84,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getUserById(long id) {
+    public AccountDto getUserById(long id) {
         Account account = accountsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
         return mapToDto(account);
     }
 
     @Override
-    public UserDto updateUser(long id, UserDto userDto) {
+    public AccountDto updateUser(long id, AccountDto accountDto) {
         Account found = accountsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 
-        found.setFirst_name(userDto.getFirst_name());
-        found.setFam_name(userDto.getFam_name());
-        found.setPassword(userDto.getPassword());
-        found.setEmail(userDto.getEmail());
+        found.setFirstName(accountDto.getFirst_name());
+        found.setLastName(accountDto.getFam_name());
+        found.setPassword(accountDto.getPassword());
+        found.setEmail(accountDto.getEmail());
         
         Account savedBook = accountsRepository.save(found);
 
