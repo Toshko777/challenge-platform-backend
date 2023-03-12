@@ -1,13 +1,15 @@
 package challenge.platform.backend.service;
 
+import challenge.platform.backend.payload.AccountResponse;
 import challenge.platform.backend.payload.AccountRoleDto;
 import challenge.platform.backend.payload.AccsResponse;
 
+// todo ?
 public interface AccountsRolesService {
 
     AccountRoleDto createAccs(AccountRoleDto bookDto);
 
-    AccsResponse getAllAccss(int pageNo, int pageSize, String sortBy, String sortDir);
+    AccountResponse getAllAccss(int pageNo, int pageSize, String sortBy, String sortDir);
 
     AccountRoleDto getAccsById(long id);
     

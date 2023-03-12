@@ -4,10 +4,10 @@ import challenge.platform.backend.entity.Account;
 import challenge.platform.backend.entity.AccountRole;
 import challenge.platform.backend.exception.ResourceNotFoundException;
 import challenge.platform.backend.payload.AccountDto;
-import challenge.platform.backend.payload.UserResponse;
+import challenge.platform.backend.payload.AccountResponse;
 import challenge.platform.backend.repository.AccountsRolesRepository;
 import challenge.platform.backend.repository.AccountsRepository;
-import challenge.platform.backend.service.UserService;
+import challenge.platform.backend.service.AccountService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,13 +18,13 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class AccountServiceImpl implements AccountService {
 
     private ModelMapper modelMapper;
     private AccountsRepository accountsRepository;
     private AccountsRolesRepository accountsRolesRepository;
 
-    public UserServiceImpl(AccountsRepository accountsRepository, ModelMapper modelMapper, AccountsRolesRepository accountsRolesRepository) {
+    public AccountServiceImpl(AccountsRepository accountsRepository, ModelMapper modelMapper, AccountsRolesRepository accountsRolesRepository) {
         this.accountsRepository = accountsRepository;
         this.modelMapper = modelMapper;
         this.accountsRolesRepository = accountsRolesRepository;
@@ -65,36 +65,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse getAllUsers(int pageNo, int pageSize, String sortBy, String sortDir) {
+    public AccountResponse getAllUsers(int pageNo, int pageSize, String sortBy, String sortDir) {
         // create Pageable instance
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(sortDir), sortBy));
-        Page<Account> users = accountsRepository.findAll(pageable);
+        Page<Account> accounts = accountsRepository.findAll(pageable);
 
         // get content for page object
-        UserResponse userResponse = new UserResponse();
+        AccountResponse accountResponse = new AccountResponse();
 
-        userResponse.setContent(users.getContent().stream().map(account -> mapToDto(account)).toList());
-        userResponse.setPageNo(users.getNumber());
-        userResponse.setPageSize(users.getSize());
-        userResponse.setTotalElements(users.getTotalElements());
-        userResponse.setTotalPages(users.getTotalPages());
-        userResponse.setLast(users.isLast());
+        accountResponse.setContent(accounts.getContent().stream().map(account -> mapToDto(account)).toList());
+        accountResponse.setPageNo(accounts.getNumber());
+        accountResponse.setPageSize(accounts.getSize());
+        accountResponse.setTotalElements(accounts.getTotalElements());
+        accountResponse.setTotalPages(accounts.getTotalPages());
+        accountResponse.setLast(accounts.isLast());
 
-        return userResponse;
+        return accountResponse;
     }
 
     @Override
     public AccountDto getUserById(long id) {
-        Account account = accountsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        Account account = accountsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Account", "id", id));
         return mapToDto(account);
     }
 
     @Override
     public AccountDto updateUser(long id, AccountDto accountDto) {
-        Account found = accountsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        Account found = accountsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Account", "id", id));
 
-        found.setFirstName(accountDto.getFirst_name());
-        found.setLastName(accountDto.getFam_name());
+        found.setFirstName(accountDto.getFirstName());
+        found.setLastName(accountDto.getLastName());
         found.setPassword(accountDto.getPassword());
         found.setEmail(accountDto.getEmail());
         

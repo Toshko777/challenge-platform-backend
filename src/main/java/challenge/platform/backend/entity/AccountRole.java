@@ -1,16 +1,15 @@
 package challenge.platform.backend.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
-
-@Entity
 @Data
-@Table(name = "accountsRoles")
+@AllArgsConstructor
 @RequiredArgsConstructor
-@NoArgsConstructor
+@Entity
+@Table(name = "Accounts_Roles")
 public class AccountRole {
 
     @Id

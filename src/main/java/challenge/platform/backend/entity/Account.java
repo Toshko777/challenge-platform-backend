@@ -12,20 +12,20 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Accounts", uniqueConstraints = {})
+@Table(name = "Accounts")
 public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
-    private String first_name;
-    private String last_name;
-    private String e_mail;
+    private String firstName;
+    private String lastName;
+    private String email;
     private String password;
-    private List badges;
+    private List<Long> badges;
     private LocalDate created;
-   
+
 
 }
 

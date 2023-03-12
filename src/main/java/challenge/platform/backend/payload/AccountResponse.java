@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class UserResponse {
+public class AccountResponse {
     private List<AccountDto> content;
     private int pageNo;
     private int pageSize;

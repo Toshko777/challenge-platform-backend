@@ -1,7 +1,7 @@
 # challenge-platform-backend
 
-[] register -> login (crypted password)
-[] challenge - create, invite people ...
+- [ ] register -> login (crypted password)
+- [ ] challenge - create, invite people ...
 
 
-[] admin - functions?
+- [ ] admin - functions?
