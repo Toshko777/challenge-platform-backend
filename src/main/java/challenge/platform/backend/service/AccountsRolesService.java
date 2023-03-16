@@ -2,7 +2,6 @@ package challenge.platform.backend.service;
 
 import challenge.platform.backend.payload.AccountResponse;
 import challenge.platform.backend.payload.AccountRoleDto;
-import challenge.platform.backend.payload.AccsResponse;
 
 // todo ?
 public interface AccountsRolesService {

@@ -12,7 +12,7 @@ CREATE TABLE Accounts
     username   varchar(30)  NOT NULL,
     first_name varchar(100) NOT NULL,
     last_name  varchar(100) NOT NULL,
-    e_mail     varchar(100) NOT NULL,
+    email     varchar(100) NOT NULL,
     password   varchar(100) NOT NULL,
     badges     TEXT[],
     created    DATE DEFAULT NULL,

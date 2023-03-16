@@ -1,4 +1,4 @@
-INSERT INTO Accounts(username, first_name, last_name, e_mail, password, created)
+INSERT INTO Accounts(username, first_name, last_name, email, password, created)
 values ('theadmin', 'admin', 'adminov', 'admin@gmail.com', 'admin', '2022-12-12');
 
 

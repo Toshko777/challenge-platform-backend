@@ -16,10 +16,8 @@ public class AccountRoleDto {
     @NotEmpty(message = "name cannot be empty")
     private String username;
 
-    
+
     private String role;
 
-    
-   
-    
+
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.annotation.PersistenceCreator;
 
 @Data
 @AllArgsConstructor
@@ -19,4 +20,9 @@ public class AccountRole {
     private Long roleId;
 
 
+    @PersistenceCreator
+    public AccountRole(Long userId, Long roleId) {
+        this.userId = userId;
+        this.roleId = roleId;
+    }
 }

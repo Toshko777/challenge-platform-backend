@@ -50,8 +50,8 @@ public class AccountsController {
 
     @PutMapping(value = "/user/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccountDto> updateUser(@PathVariable(name = "id") long id,
-                                                 @Valid @RequestBody AccountDto bookDto) {
-        return new ResponseEntity<>(accountService.updateUser(id, bookDto), HttpStatus.OK);
+                                                 @Valid @RequestBody AccountDto accountDto) {
+        return new ResponseEntity<>(accountService.updateUser(id, accountDto), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/user/{id}")
