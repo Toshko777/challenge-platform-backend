@@ -1,5 +1,5 @@
 INSERT INTO Accounts(username, first_name, last_name, email, password, created)
-values ('theadmin', 'admin', 'adminov', 'admin@gmail.com', 'admin', '2022-12-12');
+values ('theadmin', 'admin', 'adminov', 'admin@gmail.com', 'admin001', '2022-12-12');
 
 
 INSERT INTO Roles(role, permissions)

@@ -14,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,8 +66,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private Account createUserToSave(AccountDto accountDto) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         Account mappedAccount = mapToEntity(accountDto);
         mappedAccount.setCreated(LocalDate.now());
+        mappedAccount.setPassword(passwordEncoder.encode(accountDto.getPassword()));
         return mappedAccount;
     }
 
@@ -98,10 +102,11 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDto updateUser(long id, AccountDto accountDto) {
         Account found = accountsRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Account", "id", id));
-
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        
         found.setFirstName(accountDto.getFirstName());
         found.setLastName(accountDto.getLastName());
-        found.setPassword(accountDto.getPassword());
+        found.setPassword(passwordEncoder.encode(accountDto.getPassword()));
         found.setEmail(accountDto.getEmail());
         
         Account savedBook = accountsRepository.save(found);
