@@ -10,13 +10,16 @@ import org.springframework.data.annotation.PersistenceCreator;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@Table(name = "Accounts_Roles")
+@Table(name = "accounts_roles")
 public class AccountRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    // needed to start, but what does it mean?
+    @Column(name = "user_id", insertable = true, updatable = false)
     private Long userId;
+    @Column(name = "role_id", insertable = true, updatable = false)
     private Long roleId;
 
 

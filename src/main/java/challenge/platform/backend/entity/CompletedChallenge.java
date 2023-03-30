@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Completed_Challenge")
+@Table(name = "completed_challenge")
 public class CompletedChallenge {
 
     @Id

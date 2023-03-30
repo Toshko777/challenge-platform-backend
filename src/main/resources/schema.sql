@@ -1,39 +1,39 @@
-DROP TABLE IF EXISTS Accounts CASCADE;
-DROP TABLE IF EXISTS Roles CASCADE;
-DROP TABLE IF EXISTS Accounts_Roles CASCADE;
-DROP TABLE IF EXISTS Challenges CASCADE;
-DROP TABLE IF EXISTS Completed_Challenge CASCADE;
-DROP TABLE IF EXISTS Completed_Challenges CASCADE;
-DROP TABLE IF EXISTS Badges CASCADE;
+DROP TABLE IF EXISTS accounts CASCADE;
+DROP TABLE IF EXISTS roles CASCADE;
+DROP TABLE IF EXISTS accounts_roles CASCADE;
+DROP TABLE IF EXISTS challenges CASCADE;
+DROP TABLE IF EXISTS completed_challenge CASCADE;
+DROP TABLE IF EXISTS completed_challenges CASCADE;
+DROP TABLE IF EXISTS badges CASCADE;
 
-CREATE TABLE Accounts
+CREATE TABLE accounts
 (
     id         SERIAL       NOT NULL,
     username   varchar(30)  NOT NULL,
     first_name varchar(100) NOT NULL,
     last_name  varchar(100) NOT NULL,
-    email     varchar(100) NOT NULL,
+    email      varchar(100) NOT NULL,
     password   varchar(100) NOT NULL,
     badges     TEXT[],
     created    DATE DEFAULT NULL,
     PRIMARY KEY (id)
 );
 
-CREATE TABLE Roles
+CREATE TABLE roles
 (
     id          SERIAL      NOT NULL PRIMARY KEY,
     role        varchar(30) NOT NULL,
-    permissions TEXT[]
+    permissions TEXT[] -- moje bi da se mahne?
 );
 
-CREATE TABLE Accounts_Roles
+CREATE TABLE accounts_roles
 (
     id      SERIAL NOT NULL PRIMARY KEY,
-    user_id INT    NOT NULL REFERENCES Accounts (id),
-    role_id INT    NOT NULL REFERENCES Roles (id)
+    user_id INT NOT NULL REFERENCES Accounts (id),
+    role_id INT NOT NULL REFERENCES Roles (id)
 );
 
-CREATE TABLE Challenges
+CREATE TABLE challenges
 (
     id          SERIAL       NOT NULL PRIMARY KEY,
     name        varchar(100) NOT NULL,
@@ -42,13 +42,13 @@ CREATE TABLE Challenges
     created     DATE DEFAULT NULL
 );
 
-CREATE TABLE Completed_Challenges
+CREATE TABLE completed_challenges
 (
     user_id              INT          NOT NULL PRIMARY KEY REFERENCES Accounts (id),
     completed_challenges varchar(100) NOT NULL
 );
 
-CREATE TABLE Completed_Challenge
+CREATE TABLE completed_challenge
 (
     id           SERIAL NOT NULL PRIMARY KEY,
     user_id      INT    NOT NULL REFERENCES Accounts (id),
@@ -57,7 +57,7 @@ CREATE TABLE Completed_Challenge
     completed    DATE DEFAULT NULL
 );
 
-CREATE TABLE Badges
+CREATE TABLE badges
 (
     id          SERIAL       NOT NULL,
     name        varchar(100) NOT NULL,

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Completed_Challenges")
+@Table(name = "completed_challenges")
 public class CompletedChallenges {
 
     @Id

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 // admin user-controller
@@ -43,17 +44,20 @@ public class AccountsController {
         return ResponseEntity.ok(accountService.getUserById(id));
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @PostMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccountDto> createUser(@Valid @RequestBody AccountDto dto) {
         return new ResponseEntity<>(accountService.createUser(dto), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping(value = "/user/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccountDto> updateUser(@PathVariable(name = "id") long id,
                                                  @Valid @RequestBody AccountDto accountDto) {
         return new ResponseEntity<>(accountService.updateUser(id, accountDto), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping(value = "/user/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable(name = "id") Long id) {
         accountService.deleteUserById(id);
