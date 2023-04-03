@@ -3,6 +3,7 @@ package challenge.platform.backend.controller;
 import challenge.platform.backend.payload.AccountDto;
 import challenge.platform.backend.payload.AccountResponse;
 import challenge.platform.backend.service.AccountService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,8 +13,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 // admin user-controller
+
 @RestController
 @RequestMapping("/api")
+@SecurityRequirement(
+        name = "Bearer Authentication"
+)
 public class AccountsController {
 
     public static final String DEFAULT_PAGE_NUMBER = "0";
