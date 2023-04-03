@@ -39,12 +39,13 @@ public class AccountsController {
         return accountService.getAllUsers(pageNo, pageSize, sortBy, sortDir);
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccountDto> getUserById(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(accountService.getUserById(id));
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccountDto> createUser(@Valid @RequestBody AccountDto dto) {
         return new ResponseEntity<>(accountService.createUser(dto), HttpStatus.CREATED);

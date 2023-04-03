@@ -1,0 +1,40 @@
+package challenge.platform.backend.controller;
+
+import challenge.platform.backend.payload.JwtAuthResponse;
+import challenge.platform.backend.payload.LoginDto;
+import challenge.platform.backend.payload.RegisterDto;
+import challenge.platform.backend.service.AuthService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/auth")
+public class AuthController {
+
+    AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
+
+    // Build Login REST API
+    @PostMapping("/signin")
+    public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDto loginDto) {
+        String token = authService.login(loginDto);
+
+        JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
+        jwtAuthResponse.setAccessToken(token);
+
+        return ResponseEntity.ok(jwtAuthResponse);
+    }
+
+    // Build Register REST API
+    @PostMapping("/signup")
+    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
+        return new ResponseEntity<>(authService.register(registerDto), HttpStatus.CREATED);
+    }
+}

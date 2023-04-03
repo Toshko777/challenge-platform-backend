@@ -120,9 +120,17 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void deleteUserById(long userId) {
         Account found = accountRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-        accountsRolesRepository.deleteByUserId(userId);
-        accountRepository.delete(found);
-        log.info("User with id {} was deleted.", userId);
+        if (found != null) {
+            try {
+                // todo: to remove later -> we do not need this anymore
+                // because with the JoinTable annotation it happens out of the box :)
+                // accountsRolesRepository.deleteByUserId(userId);
+                accountRepository.delete(found);
+                log.info("User with id {} was deleted.", userId);
+            } catch (Exception e) {
+                throw new RuntimeException("wtf");
+            }
+        }
     }
 
 
