@@ -13,7 +13,7 @@ values ('USER', '{"create", "edit_self"}'),
        ('ADMIN', '{"create","edit","delete", "change_role", "delete_user", "deactivate_user"}');
 
 
-INSERT INTO accounts_roles(user_id, role_id)
+INSERT INTO accounts_roles(account_id, role_id)
 values (1, 3),
        (2, 1);
 

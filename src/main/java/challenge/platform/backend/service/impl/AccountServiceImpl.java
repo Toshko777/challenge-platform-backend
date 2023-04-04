@@ -53,25 +53,25 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDto createUser(AccountDto accountDto) {
-        // default is user role
+    public AccountDto createAccount(AccountDto accountDto) {
+        // default is USER role
         Long roleId = 1L;
 
         // convert dto to entity
-        Account accountToSave = createUserToSave(accountDto);
+        Account accountToSave = createAccountToSave(accountDto);
         Account createdAccount = accountRepository.save(accountToSave);
 
         AccountRole accountRole = createAccountRole(createdAccount.getId(), roleId);
         accountsRolesRepository.save(accountRole);
-        log.info("User {} with id: {} created and has role: {}", createdAccount.getUsername(), createdAccount.getId(), roleId);
+        log.info("Account {} with id: {} created and has role: {}", createdAccount.getUsername(), createdAccount.getId(), roleId);
         return mapToDto(createdAccount);
     }
 
-    private AccountRole createAccountRole(Long userId, Long roleId) {
-        return new AccountRole(userId, roleId);
+    private AccountRole createAccountRole(Long accountId, Long roleId) {
+        return new AccountRole(accountId, roleId);
     }
 
-    private Account createUserToSave(AccountDto accountDto) {
+    private Account createAccountToSave(AccountDto accountDto) {
         Account mappedAccount = mapToEntity(accountDto);
         mappedAccount.setCreated(LocalDate.now());
         mappedAccount.setPassword(passwordEncoder.encode(accountDto.getPassword()));
@@ -79,7 +79,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountResponse getAllUsers(int pageNo, int pageSize, String sortBy, String sortDir) {
+    public AccountResponse getAllAccounts(int pageNo, int pageSize, String sortBy, String sortDir) {
         // create Pageable instance
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(sortDir), sortBy));
         Page<Account> accounts = accountRepository.findAll(pageable);
@@ -98,14 +98,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDto getUserById(long id) {
+    public AccountDto getAccountById(long id) {
         Account account = accountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Account", "id", id));
         return mapToDto(account);
     }
 
     // check if user has the rights to edit this user :)
     @Override
-    public AccountDto updateUser(long id, AccountDto accountDto) {
+    public AccountDto updateAccount(long id, AccountDto accountDto) {
         Account found = accountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Account", "id", id));
         found.setFirstName(accountDto.getFirstName());
         found.setLastName(accountDto.getLastName());
@@ -113,20 +113,20 @@ public class AccountServiceImpl implements AccountService {
         found.setEmail(accountDto.getEmail());
 
         Account savedBook = accountRepository.save(found);
-        log.info("User with id: {} updated!", id);
+        log.info("Account with id: {} updated!", id);
         return mapToDto(savedBook);
     }
 
     @Override
-    public void deleteUserById(long userId) {
-        Account found = accountRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+    public void deleteAccountById(long accountId) {
+        Account found = accountRepository.findById(accountId).orElseThrow(() -> new ResourceNotFoundException("Account", "id", accountId));
         if (found != null) {
             try {
                 // todo: to remove later -> we do not need this anymore
                 // because with the JoinTable annotation it happens out of the box :)
                 // accountsRolesRepository.deleteByUserId(userId);
                 accountRepository.delete(found);
-                log.info("User with id {} was deleted.", userId);
+                log.info("Account with id {} was deleted.", accountId);
             } catch (Exception e) {
                 throw new RuntimeException("wtf");
             }

@@ -28,9 +28,9 @@ CREATE TABLE roles
 
 CREATE TABLE accounts_roles
 (
-    id      SERIAL NOT NULL PRIMARY KEY,
-    user_id INT NOT NULL REFERENCES Accounts (id),
-    role_id INT NOT NULL REFERENCES Roles (id)
+    id         SERIAL NOT NULL PRIMARY KEY,
+    account_id INT    NOT NULL REFERENCES Accounts (id),
+    role_id    INT    NOT NULL REFERENCES Roles (id)
 );
 
 CREATE TABLE challenges
@@ -42,16 +42,16 @@ CREATE TABLE challenges
     created     DATE DEFAULT NULL
 );
 
-CREATE TABLE completed_challenges
+CREATE TABLE account_completed_challenges
 (
-    user_id              INT          NOT NULL PRIMARY KEY REFERENCES Accounts (id),
+    account_id           INT          NOT NULL PRIMARY KEY REFERENCES Accounts (id),
     completed_challenges varchar(100) NOT NULL
 );
 
-CREATE TABLE completed_challenge
+CREATE TABLE account_challenge
 (
     id           SERIAL NOT NULL PRIMARY KEY,
-    user_id      INT    NOT NULL REFERENCES Accounts (id),
+    account_id   INT    NOT NULL REFERENCES Accounts (id),
     challenge_id INT    NOT NULL REFERENCES Challenges (id),
     started      DATE DEFAULT NULL,
     completed    DATE DEFAULT NULL

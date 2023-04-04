@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccountsRolesRepository extends JpaRepository<AccountRole, Long> {
 
-    void deleteByUserId(Long userId);
+    void deleteByAccountId(Long accountId);
 }

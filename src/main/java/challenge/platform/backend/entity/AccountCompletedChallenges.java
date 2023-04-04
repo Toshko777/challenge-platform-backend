@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "completed_challenges")
-public class CompletedChallenges {
+@Table(name = "account_completed_challenges")
+public class AccountCompletedChallenges {
 
     @Id
-    private Long userId;
+    private Long accountId;
     private Long challengeId;
 }

@@ -6,8 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CompletedChallengeRepository extends JpaRepository<Challenge, Long> {
+public interface AccountCompletedChallengesRepository extends JpaRepository<Challenge, Long> {
 
-    
 
 }

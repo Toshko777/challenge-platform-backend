@@ -41,32 +41,32 @@ public class AccountsController {
             @RequestParam(value = "sortBy", defaultValue = DEFAULT_SORT_BY, required = false) String sortBy,
             @RequestParam(value = "sortDir", defaultValue = DEFAULT_SORT_DIRECTION, required = false) String sortDir
     ) {
-        return accountService.getAllUsers(pageNo, pageSize, sortBy, sortDir);
+        return accountService.getAllAccounts(pageNo, pageSize, sortBy, sortDir);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @GetMapping(value = "/user/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccountDto> getUserById(@PathVariable(name = "id") Long id) {
-        return ResponseEntity.ok(accountService.getUserById(id));
+        return ResponseEntity.ok(accountService.getAccountById(id));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccountDto> createUser(@Valid @RequestBody AccountDto dto) {
-        return new ResponseEntity<>(accountService.createUser(dto), HttpStatus.CREATED);
+        return new ResponseEntity<>(accountService.createAccount(dto), HttpStatus.CREATED);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping(value = "/user/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AccountDto> updateUser(@PathVariable(name = "id") long id,
                                                  @Valid @RequestBody AccountDto accountDto) {
-        return new ResponseEntity<>(accountService.updateUser(id, accountDto), HttpStatus.OK);
+        return new ResponseEntity<>(accountService.updateAccount(id, accountDto), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping(value = "/user/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable(name = "id") Long id) {
-        accountService.deleteUserById(id);
+        accountService.deleteAccountById(id);
         return ResponseEntity.ok("User entity deleted successfully");
     }
 }

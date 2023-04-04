@@ -12,13 +12,13 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "completed_challenge")
-public class CompletedChallenge {
+@Table(name = "account_challenge")
+public class AccountChallenge {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long userId;
+    private Long accountId;
     private Long challengeId;
     private LocalDate started;
     private LocalDate completed;
