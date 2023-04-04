@@ -1,6 +1,10 @@
 package challenge.platform.backend.controller;
 
 
+import challenge.platform.backend.payload.ChallengeDto;
+import challenge.platform.backend.payload.ChallengeResponse;
+import challenge.platform.backend.service.ChallengeService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,21 +12,20 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import challenge.platform.backend.payload.ChallengeDto;
-import challenge.platform.backend.payload.ChallengeResponse;
-import challenge.platform.backend.service.ChallengeService;
-
 
 
 @RestController
 @RequestMapping("/api")
+@SecurityRequirement(
+        name = "Bearer Authentication"
+)
 public class ChallengeController {
     public static final String DEFAULT_PAGE_NUMBER = "0";
     public static final String DEFAULT_PAGE_SIZE = "10";
     public static final String DEFAULT_SORT_BY = "id";
     public static final String DEFAULT_SORT_DIRECTION = "asc";
 
-    
+
     private final ChallengeService challengeService;
 
     @Autowired
@@ -55,7 +58,7 @@ public class ChallengeController {
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @PutMapping(value = "/challenge/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ChallengeDto> updateChallenge(@PathVariable(name = "id") long id,
-                                                 @Valid @RequestBody ChallengeDto challengeDto) {
+                                                        @Valid @RequestBody ChallengeDto challengeDto) {
         return new ResponseEntity<>(challengeService.updateChallenge(id, challengeDto), HttpStatus.OK);
     }
 

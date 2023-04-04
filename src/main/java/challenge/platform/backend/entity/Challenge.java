@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 
 @Entity
@@ -24,11 +23,4 @@ public class Challenge {
     private Long creatorId;
     private LocalDate created;
 
-
-    // @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    // @JoinTable(name = "accounts",
-    //         joinColumns = @JoinColumn(name = "id", referencedColumnName = "creatorId")
-            
-    // )
-    // private Set<Account> accounts;
 }
