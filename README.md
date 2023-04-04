@@ -7,7 +7,7 @@
 
 --- 
 - [x] challenge(user) - create, edit, delete, get
-- [ ] badge (moderator/admin) - get, create, edit, delete
+- [x] badge (moderator/admin) - get, create, edit, delete
 - [ ] account_challenge (user/moderator/admin) - get, create(start), edit(finish), delete
 - [ ] когато се завърши предизвикателство, човекът автоматично получава badge 
 - [ ] badge(admin/moderator)- create, edit, delete, get, 
