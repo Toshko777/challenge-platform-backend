@@ -22,8 +22,7 @@ CREATE TABLE accounts
 CREATE TABLE roles
 (
     id          SERIAL      NOT NULL PRIMARY KEY,
-    role        varchar(30) NOT NULL,
-    permissions TEXT[] -- moje bi da se mahne?
+    role        varchar(30) NOT NULL
 );
 
 CREATE TABLE accounts_roles

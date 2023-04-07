@@ -5,19 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountRoleDto {
+public class RoleDto {
 
     private Long id;
-
-    @NotEmpty(message = "name cannot be empty")
-    private String username;
-
-
+    @NotEmpty(message = "role name cannot be empty")
     private String role;
-
 
 }
