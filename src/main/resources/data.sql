@@ -6,11 +6,11 @@ values ('theadmin', 'admin', 'adminov', 'admin@gmail.com',
 -- encode('admin001', 'base64') -> try it later
 --values ('theuser', 'user', 'userov', 'user@gmail.com', encode('user001', 'base64'), '2022-12-12');
 
--- moje bi chassta s permisionite da se mahne -> too much?!
-INSERT INTO roles(role, permissions)
-values ('USER', '{"create", "edit_self"}'),
-       ('MODERATOR', '{"create","edit","delete"}'),
-       ('ADMIN', '{"create","edit","delete", "change_role", "delete_user", "deactivate_user"}');
+
+INSERT INTO roles(role)
+values ('USER'),
+       ('MODERATOR'),
+       ('ADMIN');
 
 
 INSERT INTO accounts_roles(account_id, role_id)
