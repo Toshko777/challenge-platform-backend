@@ -3,7 +3,10 @@
 - [x] register -> login (crypted password)
 
 - [x] admin - controller за създаване/ променяне/ триене на роли.
-- [ ] AccountsRolesRepository vs RoleRepository - каква е разликата, едното да се премахне
+- [x] AccountsRolesRepository vs RoleRepository - каква е разликата, едното да се премахне
+
+AccountsRolesRepository - за таблица accounts_roles
+RoleRepository - за таблица roles
 
 --- 
 - [x] challenge(user) - create, edit, delete, get

@@ -103,7 +103,6 @@ public class AccountServiceImpl implements AccountService {
         return mapToDto(account);
     }
 
-    // check if user has the rights to edit this user :)
     @Override
     public AccountDto updateAccount(long id, AccountDto accountDto) {
         Account found = accountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Account", "id", id));
@@ -122,9 +121,6 @@ public class AccountServiceImpl implements AccountService {
         Account found = accountRepository.findById(accountId).orElseThrow(() -> new ResourceNotFoundException("Account", "id", accountId));
         if (found != null) {
             try {
-                // todo: to remove later -> we do not need this anymore
-                // because with the JoinTable annotation it happens out of the box :)
-                // accountsRolesRepository.deleteByUserId(userId);
                 accountRepository.delete(found);
                 log.info("Account with id {} was deleted.", accountId);
             } catch (Exception e) {

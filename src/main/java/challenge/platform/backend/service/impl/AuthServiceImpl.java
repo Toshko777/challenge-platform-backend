@@ -50,9 +50,8 @@ public class AuthServiceImpl implements AuthService {
 
         String token = jwtTokenProvider.generateToken(authentication);
 
-
         log.info("User {} successfully logged in!", loginDto.getUsernameOrEmail());
-//        return "User " + loginDto.getUsernameOrEmail() + " successfully logged in!";
+
         return token;
     }
 
