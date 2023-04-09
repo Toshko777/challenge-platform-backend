@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.util.List;
 
+// todo - use or remove !
 @Data
 public class AccountChallengeResponse {
     private List<AccountChallengeDto> content;

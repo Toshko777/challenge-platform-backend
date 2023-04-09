@@ -33,7 +33,8 @@ public class ChallengeController {
         this.challengeService = challengeService;
     }
 
-    @GetMapping(value = "/challenges")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'MODERATOR')")
+    @GetMapping(value = "/all-challenges")
     public ChallengeResponse getAllChallenges(
             @RequestParam(value = "pageNo", defaultValue = DEFAULT_PAGE_NUMBER, required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = DEFAULT_PAGE_SIZE, required = false) int pageSize,

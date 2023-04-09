@@ -19,10 +19,10 @@ import java.time.LocalDate;
 public class AccountChallengeDto {
     private Long id;
 
-    @NotEmpty(message = "accountId cannot be empty")
+//    @NotEmpty(message = "accountId cannot be empty")
     private Long accountId;
     
-    @NotEmpty(message = "challengeId cannot be empty")
+//    @NotEmpty(message = "challengeId cannot be empty")
     private Long challengeId;
 
 

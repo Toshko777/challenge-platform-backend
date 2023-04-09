@@ -18,8 +18,17 @@ values (1, 3),
        (2, 1);
 
 
--- INSERT INTO Challenges(name, description, creator, created)
--- values ('10k', 'walking 10k steps a day for 3 days', 'test_1', '2022-12-22');
---
--- INSERT INTO Completed_Challenges(user_id, challenge_id, started, completed)
--- values ('1', '1', '2022-12-22', '2022-12-25');
+INSERT INTO challenges(name, description, creator_id, created)
+values ('10k', 'walking 10k steps a day for 3 days', '1', '2022-12-22'),
+       ('10x3', '10 pushups a day for 3 days', '2', '2022-12-23'),
+       ('5km-challenge', 'run 5km', '1', '2022-12-24');
+
+
+INSERT INTO account_challenge(account_id, challenge_id, started)
+values (1, 1, '2022-12-22'),
+       (2, 1, '2022-12-23');
+
+INSERT INTO badges(name, description, condition)
+values ('BEGINNER', 'Complete more than 3 challenges!', 3),
+       ('INTERMEDIATE', 'Complete more than 6 challenges!', 6),
+       ('PROFI', 'Complete more than 9 challenges!', 9);
