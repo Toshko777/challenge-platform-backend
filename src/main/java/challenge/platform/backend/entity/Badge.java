@@ -17,6 +17,6 @@ public class Badge {
     private Long id;
     private String name;
     private String description;
-    private String condition;
+    private Long condition;
 
 }

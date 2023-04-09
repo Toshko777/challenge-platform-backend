@@ -1,6 +1,7 @@
 package challenge.platform.backend.controller;
 
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,9 @@ import challenge.platform.backend.service.BadgeService;
 
 @RestController
 @RequestMapping("/api")
+@SecurityRequirement(
+        name = "Bearer Authentication"
+)
 public class BadgeController {
     public static final String DEFAULT_PAGE_NUMBER = "0";
     public static final String DEFAULT_PAGE_SIZE = "10";

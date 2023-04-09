@@ -13,5 +13,5 @@ public interface AccountChallengeService {
 
     AccountChallengeDto updateAccountChallenge(AccountChallengeDto accountChallengeDto);
 
-    void deleteAccountChallengeById(long id);
+    void deleteAccountChallengeById(long accountId, long challengeId);
 }

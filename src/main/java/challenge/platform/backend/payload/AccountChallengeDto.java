@@ -5,6 +5,7 @@ package challenge.platform.backend.payload;
 
 import jakarta.validation.constraints.NotEmpty;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,10 +20,10 @@ import java.time.LocalDate;
 public class AccountChallengeDto {
     private Long id;
 
-//    @NotEmpty(message = "accountId cannot be empty")
+    @NotNull(message = "accountId cannot be null")
     private Long accountId;
     
-//    @NotEmpty(message = "challengeId cannot be empty")
+    @NotNull(message = "challengeId cannot be null")
     private Long challengeId;
 
 

@@ -54,9 +54,12 @@ public class AccountChallengeController {
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'MODERATOR')")
-    @DeleteMapping(value = "/abort/{id}")
-    public ResponseEntity<String> deleteAccountChallenge(@PathVariable(name = "id") Long id) {
-        accountChallengeService.deleteAccountChallengeById(id);
+    @DeleteMapping(value = "/abort/{accountId}/{challengeId}")
+    public ResponseEntity<String> deleteAccountChallenge(
+            @PathVariable(name = "accountId") Long accountId,
+            @PathVariable(name = "challengeId") Long challengeId
+    ) {
+        accountChallengeService.deleteAccountChallengeById(accountId, challengeId);
         return ResponseEntity.ok("Challenge was aborted");
     }
 }
