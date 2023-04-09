@@ -12,8 +12,8 @@ RoleRepository - за таблица roles
 - [x] challenge(user) - create, edit, delete, get
 - [x] badge (moderator/admin) - get, create, edit, delete
 - [x] account_challenge (user/moderator/admin) - get, create(start), edit(finish), delete
-- [ ] когато се завърши предизвикателство трябва да се запише в таблицата Account_Completed_Challenges
-- [ ] когато се завърши предизвикателство, човекът автоматично получава badge 
+- [X] когато се завърши предизвикателство трябва да се запише в таблицата Account_Completed_Challenges
+- [X] когато се завърши предизвикателство, човекът автоматично получава badge 
 
 ---
 - [] Frontend- login/create user, 

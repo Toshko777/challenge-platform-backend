@@ -44,16 +44,6 @@ public class AccountChallengeServiceImpl implements AccountChallengeService {
         this.accountRepository = accountRepository;
     }
 
-    private AccountChallengeDto mapToDto(AccountChallenge accountChallenge) {
-        return modelMapper.map(accountChallenge, AccountChallengeDto.class);
-    }
-
-
-    private AccountChallenge mapToEntity(AccountChallengeDto accountChallengeDto) {
-        return modelMapper.map(accountChallengeDto, AccountChallenge.class);
-    }
-
-
     @Override
     public AccountChallengeDto createAccountChallenge(AccountChallengeDto accountChallengeDto) {
 
@@ -134,56 +124,41 @@ public class AccountChallengeServiceImpl implements AccountChallengeService {
     private void checkForBadgeAddingToAccount(Long accountId, int numberOfUpdatedIds) {
         Account accountForBadgeUpdate = accountRepository.findById(accountId)
                 .orElseThrow(() -> new ResourceNotFoundException("Account", "accountId", accountId));
-        List<Long> badgeList = accountForBadgeUpdate.getBadges();
 
-//        List<Badge> allBadges = badgesRepository.findAll();
-
-
-        // badges
-        Badge beginner = badgesRepository.findByName("BEGINNER");
-        Badge intermediate = badgesRepository.findByName("INTERMEDIATE");
-        Badge profi = badgesRepository.findByName("PROFI");
+        List<Badge> allBadges = badgesRepository.findAll();
 
         log.info("Account with id {} has completed {} challenges.", accountId, numberOfUpdatedIds);
-        if (numberOfUpdatedIds < 3) {
-            log.info("Account with id {} is a NEWBI and still has no badges.", accountId);
-        } else if (numberOfUpdatedIds >= beginner.getCondition() &&
-                numberOfUpdatedIds < intermediate.getCondition()) {
-            assignBadge(accountForBadgeUpdate, badgeList, beginner);
-            log.info("Account with id {} has {} badge.", accountId, beginner.getName());
-        } else if (numberOfUpdatedIds >= intermediate.getCondition()
-                && numberOfUpdatedIds < profi.getCondition()) {
-            assignBadge(accountForBadgeUpdate, badgeList, intermediate);
-            log.info("Account with id {} has {} badge.", accountId, intermediate.getName());
-        } else {
-            assignBadge(accountForBadgeUpdate, badgeList, profi);
-            log.info("Account with id {} has {} badge.", accountId, profi.getName());
+
+        assignBadge(accountForBadgeUpdate, allBadges, numberOfUpdatedIds);
+    }
+
+    private void assignBadge(Account accountToUpdate, List<Badge> allBadges, int numberOfCompletedChallenges) {
+        List<Long> ownedBadgeIds = new ArrayList<>(accountToUpdate.getBadges());
+
+        for (Badge badge : allBadges) {
+            // if the badge is not already earned AND condition is met -> add it to the list
+            if (!ownedBadgeIds.contains(badge.getId()) && (numberOfCompletedChallenges >= badge.getCondition())) {
+                ownedBadgeIds.add(badge.getId());
+                log.info("user {} earned {}", accountToUpdate.getUsername(), badge.getName());
+            }
         }
-    }
+        if (accountToUpdate.getBadges().size() < ownedBadgeIds.size()) {
+            accountToUpdate.setBadges(ownedBadgeIds);
+            Account update = accountRepository.save(accountToUpdate);
+            log.info("user {} updated, new number of badges {}", accountToUpdate.getUsername(), update.getBadges().size());
 
-    private boolean checkIfBadgeIsAlreadyAssigned(List<Long> badgeList, Long badgeId) {
-        return badgeList.contains(badgeId);
-    }
-
-    private void assignBadge(Account toUpdate, List<Long> badgeList, Badge badgeType) {
-        if (!checkIfBadgeIsAlreadyAssigned(badgeList, badgeType.getId())) {
-            badgeList.add(badgeType.getId());
-            toUpdate.setBadges(badgeList);
-            accountRepository.save(toUpdate);
-            log.info("user {} updated, earned {}", toUpdate.getUsername(), badgeType.getName());
         }
+
     }
 
-//    private void assignBadge2(Account toUpdate, List<Badge> allBadges) {
-//        List<Long> badgeIds = allBadges.stream().map(badge -> badge.getId()).toList();
-//        List<Long> alreadyOwnedBadgeIds = toUpdate.getBadges();
-//        if (!checkIfBadgeIsAlreadyAssigned(badgeList, badgeType.getId())) {
-//            badgeList.add(badgeType.getId());
-//            toUpdate.setBadges(badgeList);
-//            accountRepository.save(toUpdate);
-//            log.info("user {} updated, earned {}", toUpdate.getUsername(), badgeType.getName());
-//        }
-//    }
+    private AccountChallengeDto mapToDto(AccountChallenge accountChallenge) {
+        return modelMapper.map(accountChallenge, AccountChallengeDto.class);
+    }
+
+
+    private AccountChallenge mapToEntity(AccountChallengeDto accountChallengeDto) {
+        return modelMapper.map(accountChallengeDto, AccountChallenge.class);
+    }
 
 
 }
