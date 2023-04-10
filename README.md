@@ -23,3 +23,7 @@ RoleRepository - за таблица roles
 - [ ] страница с баджовете на потребителя
 - [ ] страница с всички потребители, при натискане на потребител да се отваря нова страница с неговата информация
 - [ ] страница с информация за създателя
+
+to create image:
+create jar -> ./mvnw package
+create image -> docker build -t challenge-platform-backend .
