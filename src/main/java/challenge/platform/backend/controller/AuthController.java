@@ -3,6 +3,7 @@ package challenge.platform.backend.controller;
 import challenge.platform.backend.payload.JwtAuthResponse;
 import challenge.platform.backend.payload.LoginDto;
 import challenge.platform.backend.payload.RegisterDto;
+import challenge.platform.backend.payload.RegisteredResponse;
 import challenge.platform.backend.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,7 @@ public class AuthController {
 
     // Build Register REST API
     @PostMapping("/signup")
-    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
+    public ResponseEntity<RegisteredResponse> register(@RequestBody RegisterDto registerDto) {
         return new ResponseEntity<>(authService.register(registerDto), HttpStatus.CREATED);
     }
 }

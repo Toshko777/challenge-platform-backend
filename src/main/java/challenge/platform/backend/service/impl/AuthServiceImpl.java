@@ -5,6 +5,7 @@ import challenge.platform.backend.entity.Role;
 import challenge.platform.backend.exception.ApiException;
 import challenge.platform.backend.payload.LoginDto;
 import challenge.platform.backend.payload.RegisterDto;
+import challenge.platform.backend.payload.RegisteredResponse;
 import challenge.platform.backend.repository.AccountRepository;
 import challenge.platform.backend.repository.RoleRepository;
 import challenge.platform.backend.security.JwtTokenProvider;
@@ -56,7 +57,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String register(RegisterDto registerDto) {
+    public RegisteredResponse register(RegisterDto registerDto) {
 
         // check for existing user
         if (accountRepository.existsByUsername(registerDto.getUsername())) {
@@ -83,8 +84,12 @@ public class AuthServiceImpl implements AuthService {
 
         newAccount.setCreated(LocalDate.now());
 
-        accountRepository.save(newAccount);
+        var registered = accountRepository.save(newAccount);
         log.info("User {} registered successfully!", newAccount.getUsername());
-        return "User register successfully!";
+
+        RegisteredResponse registeredResponse = new RegisteredResponse();
+        registeredResponse.setCode("201");
+        registeredResponse.setUsername(registered.getUsername());
+        return registeredResponse;
     }
 }
