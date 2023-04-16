@@ -104,6 +104,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public AccountDto getAccountByUsernameOrEmail(String username, String email) {
+        Account account = accountRepository.findByUsernameOrEmail(username, email).orElseThrow(() -> new ResourceNotFoundException("Account", "username or email", username + " " + email));
+        return mapToDto(account);
+    }
+
+    @Override
     public AccountDto updateAccount(long id, AccountDto accountDto) {
         Account found = accountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Account", "id", id));
         found.setFirstName(accountDto.getFirstName());

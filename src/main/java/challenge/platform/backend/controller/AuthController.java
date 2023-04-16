@@ -1,9 +1,7 @@
 package challenge.platform.backend.controller;
 
-import challenge.platform.backend.payload.JwtAuthResponse;
-import challenge.platform.backend.payload.LoginDto;
-import challenge.platform.backend.payload.RegisterDto;
-import challenge.platform.backend.payload.RegisteredResponse;
+import challenge.platform.backend.payload.*;
+import challenge.platform.backend.service.AccountService;
 import challenge.platform.backend.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     AuthService authService;
+    AccountService accountService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, AccountService accountService) {
         this.authService = authService;
+        this.accountService = accountService;
     }
 
     // Build Login REST API
@@ -33,6 +33,10 @@ public class AuthController {
         JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
         jwtAuthResponse.setAccessToken(token);
 
+        AccountDto accountDto = getAccountDto(loginDto);
+        jwtAuthResponse.setUsernameOrEmail(loginDto.getUsernameOrEmail());
+        jwtAuthResponse.setUserId(accountDto.getId());
+
         return ResponseEntity.ok(jwtAuthResponse);
     }
 
@@ -40,5 +44,16 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<RegisteredResponse> register(@RequestBody RegisterDto registerDto) {
         return new ResponseEntity<>(authService.register(registerDto), HttpStatus.CREATED);
+    }
+
+    private AccountDto getAccountDto(LoginDto loginDto) {
+        AccountDto accountDto;
+
+        if (loginDto.getUsernameOrEmail().contains("@")) {
+            accountDto = accountService.getAccountByUsernameOrEmail("", loginDto.getUsernameOrEmail());
+        } else {
+            accountDto = accountService.getAccountByUsernameOrEmail(loginDto.getUsernameOrEmail(), "");
+        }
+        return accountDto;
     }
 }

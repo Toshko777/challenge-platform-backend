@@ -11,6 +11,8 @@ public interface AccountService {
 
     AccountDto getAccountById(long id);
 
+    AccountDto getAccountByUsernameOrEmail(String username, String email);
+
     AccountDto updateAccount(long id, AccountDto accountDto);
 
     void deleteAccountById(long id);
