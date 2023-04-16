@@ -16,7 +16,7 @@ import java.util.List;
 public class AccountDto {
 
     private Long id;
-    @NotEmpty(message = "username cannot be empty")
+
     private String username;
     @NotEmpty(message = "name cannot be empty")
     private String firstName;
