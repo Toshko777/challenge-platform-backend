@@ -3,6 +3,7 @@ package challenge.platform.backend.service.impl;
 import challenge.platform.backend.entity.Account;
 import challenge.platform.backend.entity.Role;
 import challenge.platform.backend.exception.ApiException;
+import challenge.platform.backend.payload.AccountDto;
 import challenge.platform.backend.payload.LoginDto;
 import challenge.platform.backend.payload.RegisterDto;
 import challenge.platform.backend.payload.RegisteredResponse;
@@ -11,6 +12,7 @@ import challenge.platform.backend.repository.RoleRepository;
 import challenge.platform.backend.security.JwtTokenProvider;
 import challenge.platform.backend.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,12 +36,15 @@ public class AuthServiceImpl implements AuthService {
     private PasswordEncoder passwordEncoder;
     private JwtTokenProvider jwtTokenProvider;
 
-    public AuthServiceImpl(AuthenticationManager authenticationManager, AccountRepository accountRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
+    private ModelMapper modelMapper;
+
+    public AuthServiceImpl(AuthenticationManager authenticationManager, AccountRepository accountRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, ModelMapper modelMapper) {
         this.authenticationManager = authenticationManager;
         this.accountRepository = accountRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -69,12 +75,9 @@ public class AuthServiceImpl implements AuthService {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Email already exists!");
         }
 
-        Account newAccount = new Account();
-        newAccount.setUsername(registerDto.getUsername());
-        newAccount.setEmail(registerDto.getEmail());
-        newAccount.setFirstName(registerDto.getFirstName());
-        newAccount.setLastName(registerDto.getLastName());
+        Account newAccount = mapToEntity(registerDto);
         newAccount.setPassword(passwordEncoder.encode(registerDto.getPassword()));
+        newAccount.setBadges(new ArrayList<>());
 
         Set<Role> roles = new HashSet<>();
         // todo - use the enum from package PAYLOAD class ROLE !
@@ -91,5 +94,9 @@ public class AuthServiceImpl implements AuthService {
         registeredResponse.setCode("201");
         registeredResponse.setUsername(registered.getUsername());
         return registeredResponse;
+    }
+
+    private Account mapToEntity(RegisterDto registerDto) {
+        return modelMapper.map(registerDto, Account.class);
     }
 }

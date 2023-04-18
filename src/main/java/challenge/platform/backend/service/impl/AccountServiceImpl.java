@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Slf4j
 @Transactional
@@ -75,6 +76,7 @@ public class AccountServiceImpl implements AccountService {
         Account mappedAccount = mapToEntity(accountDto);
         mappedAccount.setCreated(LocalDate.now());
         mappedAccount.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+        mappedAccount.setBadges(new ArrayList<>());
         return mappedAccount;
     }
 
